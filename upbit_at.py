@@ -2,15 +2,15 @@ import time
 import pyupbit
 import datetime
 import telepot   # telepot 모듈 import 
-token = "" # 봇 API 입력 
-# mc = "" # 텔레그램 숫자 ID 입력 
-mc = ""
+token = "5069562183:AAHVCjQit7rWLHii2wUjOu3q_9T1MbuwQzE" # 봇 API 입력 
+# mc = "454439308" # 텔레그램 숫자 ID 입력 
+mc = "-771094944"
 bot = telepot.Bot(token) 
 # bot.sendMessage(mc, "test") # 할말 적어서 메시지 보내기 
 
 
-access = ""
-secret = ""
+access = "uifsuM9KsjnYJQx5jWrjyu9YYx3ZXoXZLpV3oV3l"
+secret = "5Kg7PlZvyDyog3dy80P6vj1Z2RChKuHPCDURz576"
 
 
 
@@ -61,8 +61,10 @@ while True:
             if b['currency'] == ticker:
                 if b['balance'] is not None:
                     ticker_b = float(b['balance'])
+                    signal_buy = 1
                 else:
                     ticker_b = 0
+                    signal_buy = 0
                 if b['avg_buy_price'] is not None:
                     ticker_avg_buy = float(b['avg_buy_price'])
                 else:
@@ -77,19 +79,12 @@ while True:
         
         current_price = get_current_price("KRW-"+ticker)
         
-        if signal_buy != 0 : 
-            #ror = current_price/ticker_avg_buy - 1
-
-            if (macd[-2]>=80 and macd[-2] >= exp3[-2] and macd[-1] < exp3[-1]) or current_price > ticker_avg_buy*1.05  :
+        if signal_buy == 1 : 
+            if (macd[-2] >= exp3[-2] and macd[-1] < exp3[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
                 upbit.sell_market_order("KRW-"+ticker, ticker_b)
                 signal_buy = 0
-                bot.sendMessage(mc, "sell +")
-            elif current_price < ticker_avg_buy*0.97 :
-                upbit.sell_market_order("KRW-"+ticker, ticker_b)
-                bot.sendMessage(mc, "sell -")
-                signal_buy = 0
-
-        
+                bot.sendMessage(mc, "sell")
+            
         if (target_price < current_price) and (macd[-1] > exp3[-1]) and (krw > 5000):
             if (phase_buy == 2) and (ticker_avg_buy*0.98 > current_price) :
                 upbit.buy_market_order("KRW-"+ticker, buy_3rd)
