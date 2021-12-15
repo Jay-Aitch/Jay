@@ -85,26 +85,28 @@ while True:
         
         if signal_buy == 1 : 
             #if (macd[-2] >= exp3[-2] and macd[-1] < exp3[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
-            if ((slow_k[-2] >= 80) and slow_k[-1] < slow_d[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
+            if (slow_k[-2] >= 80 and slow_k[-1] < slow_d[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
                 upbit.sell_market_order("KRW-"+ticker, ticker_b)
                 signal_buy = 0
                 phase_buy = 0
                 bot.sendMessage(mc, "sell")
             
         #if (target_price < current_price) and (macd[-1] > exp3[-1]) and (krw > 5000):
-        if (slow_k[-2] <= 20) and (slow_k[-2] < slow_d[-2]) and (slow_k[-1] >= slow_d[-1]) and (macd_osc[-2] < macd_osc[-1]) and (krw > 5000):
+        #if (slow_k[-2] <= 20) and (slow_k[-2] < slow_d[-2]) and (slow_k[-1] >= slow_d[-1]) and (macd_osc[-2] < macd_osc[-1]) and (krw > 5000):
+        if (slow_k[-2] <= 80) and (macd[-2] < exp3[-2]) and (macd[-1] >= exp3[-1]) and (slow_k[-1] >= slow_d[-1]) and (krw > 5000):
+         
             if (phase_buy == 2) and (ticker_avg_buy*0.995 > current_price) :
                 upbit.buy_market_order("KRW-"+ticker, (krw*0.9995))
                 bot.sendMessage(mc, "buy 3")
                 phase_buy = 3
                     
             elif (phase_buy == 1) and (ticker_avg_buy*0.995 > current_price) :
-                upbit.buy_market_order("KRW-"+ticker, (krw*0.9995)*0.25)
+                upbit.buy_market_order("KRW-"+ticker, (krw*0.9995)*0.5)
                 bot.sendMessage(mc, "buy 2")
                 phase_buy = 2
 
             elif (phase_buy == 0)  :
-                upbit.buy_market_order("KRW-"+ticker, (krw*0.9995)*0.1)
+                upbit.buy_market_order("KRW-"+ticker, (krw*0.9995)*0.3)
                 bot.sendMessage(mc, "buy 1")
                 phase_buy = 1
                 signal_buy = 1
