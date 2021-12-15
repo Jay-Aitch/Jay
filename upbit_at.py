@@ -32,10 +32,10 @@ while True:
         now = datetime.datetime.now()
         ticker = "EOS"
         df = pyupbit.get_ohlcv("KRW-"+ticker, interval="minute5", count=200)
-        if df.iloc[-2]['volume'] < df.iloc[-1]['volume'] :
-            target_price = df.iloc[-2]['close'] + (df.iloc[-2]['high'] - df.iloc[-2]['low']) * 0.3
-        else:
-            target_price = 0
+        #if df.iloc[-2]['volume'] < df.iloc[-1]['volume'] :
+         #   target_price = df.iloc[-2]['close'] + (df.iloc[-2]['high'] - df.iloc[-2]['low']) * 0.3
+        #else:
+        #    target_price = 0
 
         close = df['close']
         ma5 = close.rolling(5).mean()
@@ -46,6 +46,14 @@ while True:
         exp2 = close.ewm(span=26, adjust=False).mean()
         macd = exp1-exp2
         exp3 = macd.ewm(span=9, adjust=False).mean()
+        macd_osc = macd - exp3
+
+        Period = 30
+        SlowK_period = 3
+        SlowD_period = 3
+        fast_k = (close - df['low'].rolling(Period).min()) / (df['high'].rolling(Period).max() - df['low'].rolling(Period).min())*100
+        slow_k = fast_k.rolling(window=SlowK_period).mean()
+        slow_d = slow_k.rolling(window=SlowD_period).mean()
 
         #print(df)
         #print('ma5:',ma5[-1], 'ma20:',ma20[-1],'ma60:',ma60[-1],'ma120:',ma120[-1])
@@ -76,19 +84,21 @@ while True:
         current_price = get_current_price("KRW-"+ticker)
         
         if signal_buy == 1 : 
-            if (macd[-2] >= exp3[-2] and macd[-1] < exp3[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
+            #if (macd[-2] >= exp3[-2] and macd[-1] < exp3[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
+            if ((slow_k[-2] >= 80) and slow_k[-1] < slow_d[-1]) or (current_price > ticker_avg_buy*1.05) or (current_price < ticker_avg_buy*0.97)  :
                 upbit.sell_market_order("KRW-"+ticker, ticker_b)
                 signal_buy = 0
                 phase_buy = 0
                 bot.sendMessage(mc, "sell")
             
-        if (target_price < current_price) and (macd[-1] > exp3[-1]) and (krw > 5000):
-            if (phase_buy == 2) and (ticker_avg_buy*0.98 > current_price) :
+        #if (target_price < current_price) and (macd[-1] > exp3[-1]) and (krw > 5000):
+        if (slow_k[-2] <= 20) and (slow_k[-2] < slow_d[-2]) and (slow_k[-1] >= slow_d[-1]) and (macd_osc[-2] < macd_osc[-1]) and (krw > 5000):
+            if (phase_buy == 2) and (ticker_avg_buy*0.995 > current_price) :
                 upbit.buy_market_order("KRW-"+ticker, (krw*0.9995))
                 bot.sendMessage(mc, "buy 3")
                 phase_buy = 3
                     
-            elif (phase_buy == 1) and (ticker_avg_buy*0.98 > current_price) :
+            elif (phase_buy == 1) and (ticker_avg_buy*0.995 > current_price) :
                 upbit.buy_market_order("KRW-"+ticker, (krw*0.9995)*0.25)
                 bot.sendMessage(mc, "buy 2")
                 phase_buy = 2
@@ -99,8 +109,8 @@ while True:
                 phase_buy = 1
                 signal_buy = 1
         #print(now,"current:",current_price,"target:",target_price,"avg:",ticker_avg_buy,"krw:",krw)
-        time.sleep(1)
+        time.sleep(0.5)
     except Exception as e:
         print(e)
         bot.sendMessage(mc, "error")
-        time.sleep(1)
+        time.sleep(0.5)
