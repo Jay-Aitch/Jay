@@ -1,7 +1,7 @@
 import time
 import pyupbit
 import datetime
-import telepot   # telepot 모듈 import 
+import telepot   # telepot 모듈 import 11
 import j_key
 
 token = j_key.get_tele_token()
