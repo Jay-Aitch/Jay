@@ -166,7 +166,7 @@ while True:
         # Enter  
         if (position['type'] is None) or (position['type']=='long' and buy_phase <= 1 and roe < -5) :
             # 
-            if slow_k_30m[-1] <= 20 or macd_30m[-1] > macd_signal_30m[-1] :
+            if slow_k_30m[-2] <= 20 or macd_30m[-1] > macd_signal_30m[-1] :
                 # macd_5m[-2] < macd_5m[-1] and  and macd_osc_30m[-2] < macd_osc_30m[-1]
                 if slow_k_5m[-1] <= 20 :
                     # 
@@ -192,7 +192,7 @@ while True:
 
         if (position['type'] is None) or (position['type']=='short' and buy_phase <= 1 and roe < -5) :
             # 
-            if slow_k_30m[-1] >= 80 or macd_30m[-1] < macd_signal_30m[-1]:
+            if slow_k_30m[-2] >= 80 or macd_30m[-1] < macd_signal_30m[-1]:
                 # macd_5m[-2] > macd_5m[-1] and  and macd_osc_30m[-2] > macd_osc_30m[-1]
                 if slow_k_5m[-1] >= 80   :
                     # 
@@ -242,7 +242,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산 : "+str(roe)+"%")
                     buy_phase=0
-                elif macd_30m[-1] < macd_signal_30m[-1] and slow_k_5m[-1] >= 70 and slow_k_1m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1]  :
+                elif macd_30m[-1] < macd_signal_30m[-1] and slow_k_5m[-1] >= 60 and slow_k_1m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1]  :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -274,7 +274,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산 : "+str(roe)+"%")
                     buy_phase=0
-                elif macd_30m[-1] > macd_signal_30m[-1] and slow_k_5m[-1] <= 30 and slow_k_1m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
+                elif macd_30m[-1] > macd_signal_30m[-1] and slow_k_5m[-1] <= 40 and slow_k_1m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
