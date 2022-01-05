@@ -78,7 +78,7 @@ while True:
         macd_5m = exp1_5m-exp2_5m
         macd_signal_5m = macd_5m.ewm(span=9, adjust=False).mean()
         macd_osc_5m = macd_5m - macd_signal_5m
-        Period = 30
+        Period = 20
         SlowK_period = 3
         SlowD_period = 3
         fast_k_5m = (close_5m - df_5m['low'].rolling(Period).min()) / (df_5m['high'].rolling(Period).max() - df_5m['low'].rolling(Period).min())*100
@@ -166,11 +166,11 @@ while True:
         # Enter  
         if (position['type'] is None) or (position['type']=='long' and buy_phase <= 1 and roe < -5) :
             # 
-            if (slow_k_30m[-2] <= 20 and slow_k_5m[-1] <= 20 and slow_k_1m[-2] <= 25) or ( macd_30m[-2] < macd_30m[-1] and macd_5m[-1] >= macd_signal_5m[-1] and slow_k_1m[-2] <= 60 ) :
-                # macd_5m[-2] < macd_5m[-1] and  and macd_osc_30m[-2] < macd_osc_30m[-1]
-                if macd_1m[-2] < macd_1m[-1] :
+            if (slow_k_30m[-2] <= 20  ) or ( macd_30m[-1] >= macd_signal_30m[-1] ) :
+                # macd_5m[-2] < macd_5m[-1] and  and macd_osc_30m[-2] < macd_osc_30m[-1] macd_30m[-2] < macd_30m[-1] and and  macd_5m[-1] >= macd_signal_5m[-1]
+                if slow_k_5m[-1] <= 20 and slow_k_1m[-2] <= 20 :
                     # slow_k_1m[-2] <= 25 and
-                    if slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1]  :
+                    if slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_1m[-2] < macd_1m[-1]  :
                         position['type'] = 'long'
                         if buy_phase == 0 :
                             buy_phase = 1
@@ -192,11 +192,11 @@ while True:
 
         if (position['type'] is None) or (position['type']=='short' and buy_phase <= 1 and roe < -5) :
             # 
-            if (slow_k_30m[-2] >= 80 and slow_k_5m[-1] >= 80 and slow_k_1m[-2] >= 75) or ( macd_30m[-2] > macd_30m[-1] and macd_5m[-1] <= macd_signal_5m[-1] and slow_k_1m[-2] >= 40 ) :
-                # macd_5m[-2] > macd_5m[-1] and  and macd_osc_30m[-2] > macd_osc_30m[-1]
-                if macd_1m[-2] > macd_1m[-1]    :
+            if (slow_k_30m[-2] >= 80 ) or ( macd_30m[-1] < macd_signal_30m[-1]  ) :
+                # macd_5m[-2] > macd_5m[-1] and  and macd_osc_30m[-2] > macd_osc_30m[-1] and macd_5m[-1] <= macd_signal_5m[-1] and slow_k_1m[-2] >= 40
+                if slow_k_5m[-1] >= 80 and slow_k_1m[-2] >= 80    :
                     # 
-                    if slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] :
+                    if slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_1m[-2] > macd_1m[-1] :
                         position['type'] = 'short'
                         if buy_phase == 0 :
                             buy_phase = 1
@@ -235,14 +235,14 @@ while True:
                     if roe < trailing_target - trailing_limit :
                         trailing_exit = 1
                         trailing_target = 0     
-            if position['type'] == 'long':  # or slow_k_30m[-1] <= slow_d_30m[-1] 
+            if position['type'] == 'long':  # or slow_k_30m[-1] <= slow_d_30m[-1] and slow_k_5m[-1] >= 50 and slow_k_1m[-2] >= 50
                 if slow_k_30m[-1] >= 80 and slow_k_5m[-1] >= 80 and slow_k_1m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1]  :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산 : "+str(roe)+"%")
                     buy_phase=0
-                elif macd_30m[-1] < macd_signal_30m[-1] and slow_k_5m[-1] >= 50 and slow_k_1m[-2] >= 50 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1]  :
+                elif macd_30m[-1] < macd_signal_30m[-1]  and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1]  :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
