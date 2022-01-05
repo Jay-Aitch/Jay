@@ -166,7 +166,7 @@ while True:
         # Enter  
         if (position['type'] is None) or (position['type']=='long' and buy_phase <= 1 and roe < -5) :
             # 
-            if slow_k_30m[-2] <= 20 or (macd_30m[-1] > macd_signal_30m[-1] and macd_30m[-2] < macd_30m[-1]) :
+            if slow_k_30m[-2] <= 20 or  macd_30m[-2] < macd_30m[-1] :
                 # macd_5m[-2] < macd_5m[-1] and  and macd_osc_30m[-2] < macd_osc_30m[-1]
                 if slow_k_5m[-1] <= 20 :
                     # 
@@ -192,7 +192,7 @@ while True:
 
         if (position['type'] is None) or (position['type']=='short' and buy_phase <= 1 and roe < -5) :
             # 
-            if slow_k_30m[-2] >= 80 or (macd_30m[-1] < macd_signal_30m[-1] and macd_30m[-2] > macd_30m[-1]) :
+            if slow_k_30m[-2] >= 80 or macd_30m[-2] > macd_30m[-1] :
                 # macd_5m[-2] > macd_5m[-1] and  and macd_osc_30m[-2] > macd_osc_30m[-1]
                 if slow_k_5m[-1] >= 80   :
                     # 
