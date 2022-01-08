@@ -25,6 +25,7 @@ TP_target = 100
 roe_target = 5
 trailing_limit = 2
 standby_a=0
+buy_condition=0
 
 # 파일로부터 apiKey, Secret 읽기 
 with open("binance_api_key.txt") as f:
@@ -144,6 +145,7 @@ while True:
         else :
             amount = cal_amount(usdt, cur_price)
             buy_phase = 0
+            buy_condition = 0
 
         if buy_phase >= 1 :
             roe = round((float(btc_position['unrealizedProfit']) / float(btc_position['positionInitialMargin'])) *100,2)
