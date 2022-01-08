@@ -155,7 +155,6 @@ while True:
         if (position['type'] is None) :
             #long조건1 
             if slow_k_30m[-2] <= 20 and slow_k_5m[-2] <= 20 :
-                print("long1")
                 # 
                 if slow_k_1m[-2] <= 20 :
                     # 
@@ -182,7 +181,6 @@ while True:
                         bot.sendMessage(mc, buy_msg)
             #long조건2
             elif (macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]) or (macd_5m[-1] > macd_signal_5m[-1])  :
-                print("long2")
                 # and slow_k_30m[-1] > slow_d_30m[-1] and macd_30m[-2] < macd_30m[-1]
                 if slow_k_5m[-1] <= 40 and slow_k_1m[-2] <= 40 :
                     # 
@@ -209,7 +207,6 @@ while True:
                         bot.sendMessage(mc, buy_msg) 
             #long조건3  
             elif macd_30m[-2] < macd_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1] :
-                print("long3")
                 # macd_5m[-2] < macd_5m[-1] andmacd_30m[-1] > macd_signal_30m[-1] and macd_5m[-1] > macd_signal_5m[-1] 
                 if slow_k_5m[-2] <= 40 and slow_k_1m[-2] <= 40  :
                     # 
@@ -239,7 +236,6 @@ while True:
         if (position['type'] is None) :
             #short조건1
             if slow_k_30m[-2] >= 80 and slow_k_5m[-2] >= 80  :
-                print("short1")
                 # 
                 if slow_k_1m[-2] >= 80  :
                     # 
@@ -266,7 +262,6 @@ while True:
                         bot.sendMessage(mc, buy_msg )
             #short조건2
             elif macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] and macd_5m[-1] < macd_signal_5m[-1]  :
-                print("short2")
                 #and slow_k_30m[-1] < slow_d_30m[-1] and macd_30m[-2] > macd_30m[-1]
                 if slow_k_5m[-1] >= 60 and slow_k_1m[-2] >= 60  :
                     
@@ -294,7 +289,6 @@ while True:
                         bot.sendMessage(mc, buy_msg )
             #short조건3
             elif macd_30m[-2] > macd_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1]  :
-                print("short3")
                 # 
                 if slow_k_5m[-2] >= 60 and slow_k_1m[-2] >= 60 :
                     # 
