@@ -62,8 +62,8 @@ bot.sendMessage(mc, "START")
 print("START")
 while True: 
     try:
-        now = datetime.datetime.now()
-        print(now)
+        #now = datetime.datetime.now()
+        
         # 과거 조회
         btc_ohlcv_5m = binance.fetch_ohlcv(symbol="BTC/USDT", timeframe='5m', since=None, limit=50)
         df_5m = pd.DataFrame(btc_ohlcv_5m, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
@@ -157,7 +157,7 @@ while True:
         #if (position['type'] is None) :and slow_k_30m[-2] < slow_k_30m[-1]
             #long조건1 
             if slow_k_30m[-2] <= 20 and slow_k_30m[-2] < slow_k_30m[-1] and slow_k_30m[-1] >= slow_d_30m[-1] :
-                print("long1") 
+                #print("long1") 
                 if slow_k_5m[-2] <= 80 and macd_signal_5m[-2] < macd_signal_5m[-1] and macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]  :
                     # 
                     if slow_k_1m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
@@ -185,7 +185,7 @@ while True:
                         
             #long조건2
             if macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1] and slow_k_30m[-1] >= slow_d_30m[-1] and buy_status == 0 :
-                print("long2")
+                #print("long2")
                 if slow_k_5m[-2] <= 80 :
                     #
                     if slow_k_1m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1] :
@@ -212,7 +212,7 @@ while True:
                         bot.sendMessage(mc, buy_msg) 
             #long조건3  
             if macd_signal_5m[-2] < macd_signal_5m[-1] and slow_k_30m[-1] >= slow_d_30m[-1] and buy_status == 0 :
-                print("long3")
+                #print("long3")
                 if slow_k_5m[-2] <= 80 :
                     # and slow_k_5m[-1] > slow_d_5m[-1] 
                     if slow_k_1m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1] :
@@ -239,7 +239,7 @@ while True:
                         bot.sendMessage(mc, buy_msg)
             #long조건4  
             if slow_k_5m[-2] <= 60 and macd_5m[-1] >= macd_signal_5m[-1] and buy_status == 0 :
-                print("long4")
+                #print("long4")
                 if macd_osc_5m[-2] < macd_osc_5m[-1] and macd_5m[-2] < macd_5m[-1] :
                     # macd_30m[-2] < macd_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]
                     if slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
@@ -270,7 +270,7 @@ while True:
         #if (position['type'] is None) :    and slow_k_30m[-2] > slow_k_30m[-1]
             #short조건1
             if slow_k_30m[-2] >= 80 and slow_k_30m[-2] > slow_k_30m[-1] and slow_k_30m[-1] <= slow_d_30m[-1] and buy_status == 0  :
-                print("short1")
+                #print("short1")
                 if slow_k_5m[-2] >= 20  and macd_signal_5m[-2] > macd_signal_5m[-1] and macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] :
                     # 
                     if  slow_k_1m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
@@ -297,7 +297,7 @@ while True:
                         bot.sendMessage(mc, buy_msg )
             #short조건2
             if macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] and slow_k_30m[-1] <= slow_d_30m[-1] and buy_status == 0  :
-                print("short2")
+                #print("short2")
                 if slow_k_5m[-2] >= 20 :
                     # and macd_5m[-1] < macd_signal_5m[-1] and macd_1m[-1] < macd_signal_1m[-1]
                     if slow_k_1m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
@@ -324,7 +324,7 @@ while True:
                         bot.sendMessage(mc, buy_msg )
             #short조건3
             if macd_signal_5m[-2] > macd_signal_5m[-1] and slow_k_30m[-1] <= slow_d_30m[-1] and buy_status == 0  :
-                print("short3")
+                #print("short3")
                 if slow_k_5m[-2] >= 20   :
                     # and macd_1m[-1] < macd_signal_1m[-1] and slow_k_5m[-1] < slow_d_5m[-1] 
                     if slow_k_1m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
@@ -351,7 +351,7 @@ while True:
                         bot.sendMessage(mc, buy_msg )
             #short조건4
             if slow_k_5m[-2] >= 40 and macd_5m[-1] <= macd_signal_5m[-1] and buy_status == 0  :
-                print("short4")
+                #print("short4")
                 if macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] :
                     # 
                     if slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] :
