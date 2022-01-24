@@ -168,7 +168,7 @@ while True:
                 print("long1") 
                 if slow_k_5m[-2] <= 50 and slow_k_30m[-1] > slow_d_30m[-1] :
                     # 
-                    if slow_k_1m[-2] <= 50 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
+                    if slow_k_1m[-2] <= 80 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
                         position['type'] = 'long'
                         if buy_phase == 0 :
                             buy_phase = 1
@@ -200,7 +200,7 @@ while True:
                 print("short1")
                 if slow_k_5m[-2] >= 50 and slow_k_30m[-1] < slow_d_30m[-1]  :
                     # 
-                    if  slow_k_1m[-2] >= 50 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
+                    if  slow_k_1m[-2] >= 20 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
                         position['type'] = 'short'
                         if buy_phase == 0 :
                             buy_phase = 1
