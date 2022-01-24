@@ -166,7 +166,7 @@ while True:
             print(now,"long")
             if slow_k_30m[-2] <= 90 and slow_k_30m[-1] > slow_d_30m[-1] :
                 print("long1") 
-                if slow_k_5m[-2] <= 20 and macd_osc_5m[-2] < macd_osc_5m[-1] :
+                if slow_k_5m[-2] <= 60 and macd_osc_5m[-2] < macd_osc_5m[-1] :
                     # 
                     if slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1]  :
                         position['type'] = 'long'
@@ -198,7 +198,7 @@ while True:
             print(now,"short")
             if slow_k_30m[-2] >= 10 and slow_k_30m[-1] < slow_d_30m[-1]  :
                 print("short1")
-                if slow_k_5m[-2] >= 80 and macd_osc_5m[-2] > macd_osc_5m[-1] :
+                if slow_k_5m[-2] >= 40 and macd_osc_5m[-2] > macd_osc_5m[-1] :
                     # 
                     if  slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1]  :
                         position['type'] = 'short'
