@@ -105,7 +105,7 @@ while True:
         slow_k_1m = fast_k_1m.rolling(window=SlowK_period).mean()
         slow_d_1m = slow_k_1m.rolling(window=SlowD_period).mean()
 
-        btc_ohlcv_30m = binance.fetch_ohlcv(symbol="BTC/USDT", timeframe='15m', since=None, limit=30)
+        btc_ohlcv_30m = binance.fetch_ohlcv(symbol="BTC/USDT", timeframe='30m', since=None, limit=30)
         df_30m = pd.DataFrame(btc_ohlcv_30m, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
         df_30m['datetime'] = pd.to_datetime(df_30m['datetime'], unit='ms')
         df_30m.set_index('datetime', inplace=True)
@@ -164,9 +164,9 @@ while True:
         #if (position['type'] is None) :and slow_k_30m[-2] < slow_k_30m[-1] and macd_5m[-2] < macd_5m[-1] and (macd_30m[-1] > macd_signal_30m[-1] or macd_30m[-2] < macd_30m[-1] and ) and macd_30m[-1] > macd_signal_30m[-1]  
             #long조건1             slow_k_30m[-2] < slow_k_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]and macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]and slow_k_30m[-2] < slow_d_30m[-2] 
             print(now,"long")
-            if slow_k_30m[-2] <= 90 and slow_k_30m[-2] <= slow_d_30m[-2] :
+            if slow_k_30m[-2] <= 90 and slow_k_30m[-1] > slow_d_30m[-1] :
                 print("long1") 
-                if slow_k_5m[-2] <= 50 and slow_k_30m[-1] > slow_d_30m[-1] :
+                if slow_k_5m[-2] <= 70 and slow_k_5m[-1] > slow_d_5m[-1] :
                     # 
                     if slow_k_1m[-2] <= 80 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
                         position['type'] = 'long'
@@ -196,9 +196,9 @@ while True:
         #if (position['type'] is None) :    and  and (slow_k_30m[-2] > slow_k_30m[-1] and  (macd_30m[-1] < macd_signal_30m[-1] or macd_30m[-2] > macd_30m[-1])) and macd_30m[-1] < macd_signal_30m[-1]
             #short조건1                    slow_k_30m[-2] > slow_k_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1]and macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1]and slow_k_30m[-2] > slow_d_30m[-2]
             print(now,"short")
-            if slow_k_30m[-2] >= 10 and slow_k_30m[-2] >= slow_d_30m[-2] and buy_status == 0  :
+            if slow_k_30m[-2] >= 10 and slow_k_30m[-1] < slow_d_30m[-1]  :
                 print("short1")
-                if slow_k_5m[-2] >= 50 and slow_k_30m[-1] < slow_d_30m[-1]  :
+                if slow_k_5m[-2] >= 30 and slow_k_5m[-1] < slow_d_5m[-1]  :
                     # 
                     if  slow_k_1m[-2] >= 20 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
                         position['type'] = 'short'
@@ -256,7 +256,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산(2) : "+str(roe)+"%")
                     buy_phase=0
-                elif 8 <= buy_condition <= 9 and slow_k_5m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
+                elif slow_k_5m[-2] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] and macd_osc_1m[-2] > macd_osc_1m[-1] :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -312,7 +312,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산(2) : "+str(roe)+"%")
                     buy_phase=0
-                elif 8 <= buy_condition <= 9 and slow_k_5m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
+                elif slow_k_5m[-2] <= 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1] and macd_osc_1m[-2] < macd_osc_1m[-1]  :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
