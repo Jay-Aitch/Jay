@@ -83,8 +83,8 @@ while True:
         SlowK_period = 3
         SlowD_period = 3
         Period2 = 20
-        SlowK_period2 = 3
-        SlowD_period2 = 3
+        SlowK_period2 = 5
+        SlowD_period2 = 5
         fast_k_5m = (close_5m - df_5m['low'].rolling(Period2).min()) / (df_5m['high'].rolling(Period2).max() - df_5m['low'].rolling(Period2).min())*100
         slow_k_5m = fast_k_5m.rolling(window=SlowK_period2).mean()
         slow_d_5m = slow_k_5m.rolling(window=SlowD_period2).mean()
