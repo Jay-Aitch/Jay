@@ -83,11 +83,15 @@ while True:
         SlowK_period = 3
         SlowD_period = 3
         Period2 = 20
-        SlowK_period2 = 3
-        SlowD_period2 = 3
-        fast_k_5m = (close_5m - df_5m['low'].rolling(Period2).min()) / (df_5m['high'].rolling(Period2).max() - df_5m['low'].rolling(Period2).min())*100
-        slow_k_5m = fast_k_5m.rolling(window=SlowK_period2).mean()
-        slow_d_5m = slow_k_5m.rolling(window=SlowD_period2).mean()
+        SlowK_period2 = 5
+        SlowD_period2 = 5
+        fast_k_5m = (close_5m - df_5m['low'].rolling(Period).min()) / (df_5m['high'].rolling(Period).max() - df_5m['low'].rolling(Period).min())*100
+        slow_k_5m = fast_k_5m.rolling(window=SlowK_period).mean()
+        slow_d_5m = slow_k_5m.rolling(window=SlowD_period).mean()
+
+        fast_k_5m_2 = (close_5m - df_5m['low'].rolling(Period2).min()) / (df_5m['high'].rolling(Period2).max() - df_5m['low'].rolling(Period2).min())*100
+        slow_k_5m_2 = fast_k_5m_2.rolling(window=SlowK_period2).mean()
+        slow_d_5m_2 = slow_k_5m_2.rolling(window=SlowD_period2).mean()
 
         btc_ohlcv_1m = binance.fetch_ohlcv(symbol="BTC/USDT", timeframe='1m', since=None, limit=30)
         df_1m = pd.DataFrame(btc_ohlcv_1m, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
@@ -103,9 +107,9 @@ while True:
         macd_1m = exp1_1m-exp2_1m
         macd_signal_1m = macd_1m.ewm(span=9, adjust=False).mean()
         macd_osc_1m = macd_1m - macd_signal_1m
-        fast_k_1m = (close_1m - df_1m['low'].rolling(Period2).min()) / (df_1m['high'].rolling(Period2).max() - df_1m['low'].rolling(Period2).min())*100
-        slow_k_1m = fast_k_1m.rolling(window=SlowK_period2).mean()
-        slow_d_1m = slow_k_1m.rolling(window=SlowD_period2).mean()
+        fast_k_1m = (close_1m - df_1m['low'].rolling(Period).min()) / (df_1m['high'].rolling(Period).max() - df_1m['low'].rolling(Period).min())*100
+        slow_k_1m = fast_k_1m.rolling(window=SlowK_period).mean()
+        slow_d_1m = slow_k_1m.rolling(window=SlowD_period).mean()
 
         btc_ohlcv_30m = binance.fetch_ohlcv(symbol="BTC/USDT", timeframe='30m', since=None, limit=30)
         df_30m = pd.DataFrame(btc_ohlcv_30m, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
@@ -168,7 +172,7 @@ while True:
             
             if slow_k_30m[-1] <= 90 and slow_k_30m[-1] > slow_d_30m[-1] :
                 print(now,"long")
-                if slow_k_5m[-2] <= 90 and slow_k_5m[-1] > slow_d_5m[-1]  :
+                if slow_k_5m[-1] <= 90 and slow_k_5m[-1] > slow_d_5m[-1]  :
                     #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2]
                     if macd_5m[-2] <= macd_signal_5m[-2] and macd_5m[-1] > macd_signal_5m[-1]  :
                         position['type'] = 'long'
@@ -200,7 +204,7 @@ while True:
             
             if slow_k_30m[-1] >= 10 and slow_k_30m[-1] < slow_d_30m[-1]  :
                 print(now,"short")
-                if slow_k_5m[-2] >= 10 and slow_k_5m[-1] < slow_d_5m[-1]  :
+                if slow_k_5m[-1] >= 10 and slow_k_5m[-1] < slow_d_5m[-1]  :
                     # 
                     if macd_5m[-2] >= macd_signal_5m[-2] and macd_5m[-1] < macd_signal_5m[-1]  :
                         position['type'] = 'short'
@@ -264,7 +268,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산(3) : "+str(roe)+"%")
                     buy_phase=0
-                elif slow_k_5m[-2] >= 80 and slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] :
+                elif slow_k_5m_2[-2] >= 80 and slow_k_5m_2[-2] >= slow_d_5m_2[-2] and slow_k_5m_2[-1] < slow_d_5m_2[-1] :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -320,7 +324,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산(3) : "+str(roe)+"%")
                     buy_phase=0   
-                elif slow_k_5m[-2] <= 20 and slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
+                elif slow_k_5m_2[-2] <= 20 and slow_k_5m_2[-2] <= slow_d_5m_2[-2] and slow_k_5m_2[-1] > slow_d_5m_2[-1] :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
