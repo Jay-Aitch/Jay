@@ -270,7 +270,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산(4) : "+str(roe)+"%")
                     buy_phase=0
-                elif slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] and macd_5m[-2] > macd_5m[-1] :
+                elif buy_condition == 9 and slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] and macd_5m[-2] > macd_5m[-1] :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -326,7 +326,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산(4) : "+str(roe)+"%")
                     buy_phase=0 
-                elif slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1] and macd_5m[-2] < macd_5m[-1] :
+                elif buy_condition == 9 and slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1] and macd_5m[-2] < macd_5m[-1] :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
