@@ -79,7 +79,7 @@ while True:
         macd_5m = exp1_5m-exp2_5m
         macd_signal_5m = macd_5m.ewm(span=9, adjust=False).mean()
         macd_osc_5m = macd_5m - macd_signal_5m
-        Period = 20
+        Period = 30
         SlowK_period = 3
         SlowD_period = 3
         Period2 = 20
@@ -268,7 +268,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산(3) : "+str(roe)+"%")
                     buy_phase=0
-                elif slow_k_5m_2[-2] >= 80 and slow_k_5m_2[-2] >= slow_d_5m_2[-2] and slow_k_5m_2[-1] < slow_d_5m_2[-1] :
+                elif slow_k_5m[-2] >= 80 and slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -324,7 +324,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산(3) : "+str(roe)+"%")
                     buy_phase=0   
-                elif slow_k_5m_2[-2] <= 20 and slow_k_5m_2[-2] <= slow_d_5m_2[-2] and slow_k_5m_2[-1] > slow_d_5m_2[-1] :
+                elif slow_k_5m[-2] <= 20 and slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
