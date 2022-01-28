@@ -170,7 +170,7 @@ while True:
             SL_target = -20
         buy_status = 0
         # Enter  
-        if ((position['type'] is None) or (position['type']=='long' and buy_phase <= 1 and roe < -3)) :
+        if ((position['type'] is None) or (position['type']=='long' and buy_phase <= 0 and roe < -3)) :
         #if (position['type'] is None) :and slow_k_30m[-2] < slow_k_30m[-1] and macd_5m[-2] < macd_5m[-1] and (macd_30m[-1] > macd_signal_30m[-1] or macd_30m[-2] < macd_30m[-1] and ) and macd_30m[-1] > macd_signal_30m[-1]  
             #long조건1             slow_k_30m[-2] < slow_k_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]and macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]and slow_k_30m[-2] < slow_d_30m[-2] 
             
@@ -240,7 +240,7 @@ while True:
 
                         
             
-        if ((position['type'] is None) or (position['type']=='short' and buy_phase <= 1 and roe < -3))  :
+        if ((position['type'] is None) or (position['type']=='short' and buy_phase <= 0 and roe < -3))  :
         #if (position['type'] is None) :    and  and (slow_k_30m[-2] > slow_k_30m[-1] and  (macd_30m[-1] < macd_signal_30m[-1] or macd_30m[-2] > macd_30m[-1])) and macd_30m[-1] < macd_signal_30m[-1]
             #short조건1                    slow_k_30m[-2] > slow_k_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1]and macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1]and slow_k_30m[-2] > slow_d_30m[-2]
             if slow_k_30m[-1] >= 20 and slow_k_30m[-1] < slow_d_30m[-1]  :
