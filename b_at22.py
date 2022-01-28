@@ -171,7 +171,7 @@ while True:
             #long조건1             slow_k_30m[-2] < slow_k_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]and macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]and slow_k_30m[-2] < slow_d_30m[-2] 
             
             if slow_k_30m[-1] <= 90 and slow_k_30m[-1] > slow_d_30m[-1] :
-                print(now,"long")
+                #print(now,"long")
                 if slow_k_5m[-1] <= 80 and slow_k_5m[-2] > slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
                     #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2]
                     if macd_5m[-2] <= macd_signal_5m[-2] and macd_5m[-1] > macd_signal_5m[-1]  :
@@ -219,7 +219,7 @@ while True:
         #if (position['type'] is None) :    and  and (slow_k_30m[-2] > slow_k_30m[-1] and  (macd_30m[-1] < macd_signal_30m[-1] or macd_30m[-2] > macd_30m[-1])) and macd_30m[-1] < macd_signal_30m[-1]
             #short조건1                    slow_k_30m[-2] > slow_k_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1]and macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1]and slow_k_30m[-2] > slow_d_30m[-2]
             if slow_k_30m[-1] >= 10 and slow_k_30m[-1] < slow_d_30m[-1]  :
-                print(now,"short")
+                #print(now,"short")
                 if slow_k_5m[-1] >= 20 and slow_k_5m[-2] < slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1]  :
                     # 
                     if macd_5m[-2] >= macd_signal_5m[-2] and macd_5m[-1] < macd_signal_5m[-1]  :
