@@ -82,7 +82,7 @@ while True:
         Period = 10
         SlowK_period = 3
         SlowD_period = 3
-        Period2 = 10
+        Period2 = 30
         SlowK_period2 = 3
         SlowD_period2 = 3
         fast_k_5m = (close_5m - df_5m['low'].rolling(Period).min()) / (df_5m['high'].rolling(Period).max() - df_5m['low'].rolling(Period).min())*100
@@ -125,6 +125,10 @@ while True:
         fast_k_30m = (close_30m - df_30m['low'].rolling(Period).min()) / (df_30m['high'].rolling(Period).max() - df_30m['low'].rolling(Period).min())*100
         slow_k_30m = fast_k_30m.rolling(window=SlowK_period).mean()
         slow_d_30m = slow_k_30m.rolling(window=SlowD_period).mean()
+
+        fast_k_30m_2 = (close_30m - df_30m['low'].rolling(Period2).min()) / (df_30m['high'].rolling(Period2).max() - df_30m['low'].rolling(Period2).min())*100
+        slow_k_30m_2 = fast_k_30m_2.rolling(window=SlowK_period2).mean()
+        slow_d_30m_2 = slow_k_30m_2.rolling(window=SlowD_period2).mean()
 
         balance = binance.fetch_balance()
         usdt = balance['total']['USDT']
@@ -214,7 +218,7 @@ while True:
                         time.sleep(1)
                         bot.sendMessage(mc, buy_msg )
 
-                elif macd_30m[-2] <= macd_signal_30m[-2] and macd_30m[-1] > macd_signal_30m[-1] :
+                elif slow_k_5m[-2] <= 20 :
                     if slow_k_5m[-2] < slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
                         position['type'] = 'long'
                         if buy_phase == 0 :
@@ -284,7 +288,7 @@ while True:
                         time.sleep(1)
                         bot.sendMessage(mc, buy_msg )
             
-                elif macd_30m[-2] >= macd_signal_30m[-2] and macd_30m[-1] < macd_signal_30m[-1] :
+                elif slow_k_5m[-2] >= 80 :
                     if slow_k_5m[-2] > slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] :
                         position['type'] = 'short'
                         if buy_phase == 0 :
@@ -349,7 +353,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산(4) : "+str(roe)+"%")
                     buy_phase=0
-                elif slow_k_30m[-1] > 80 and slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1]  :
+                elif buy_condition == 9 and slow_k_30m[-1] > 80 and slow_k_5m[-2] >= slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1]  :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -405,7 +409,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산(4) : "+str(roe)+"%")
                     buy_phase=0 
-                elif slow_k_30m[-2] < 20 and slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
+                elif buy_condition == 9 and slow_k_30m[-2] < 20 and slow_k_5m[-2] <= slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1] :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
