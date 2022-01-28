@@ -79,10 +79,10 @@ while True:
         macd_5m = exp1_5m-exp2_5m
         macd_signal_5m = macd_5m.ewm(span=9, adjust=False).mean()
         macd_osc_5m = macd_5m - macd_signal_5m
-        Period = 30
+        Period = 10
         SlowK_period = 3
         SlowD_period = 3
-        Period2 = 20
+        Period2 = 10
         SlowK_period2 = 3
         SlowD_period2 = 3
         fast_k_5m = (close_5m - df_5m['low'].rolling(Period).min()) / (df_5m['high'].rolling(Period).max() - df_5m['low'].rolling(Period).min())*100
