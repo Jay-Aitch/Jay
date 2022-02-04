@@ -122,9 +122,9 @@ while True:
         macd_signal_30m = macd_30m.ewm(span=9, adjust=False).mean()
         macd_osc_30m = macd_30m - macd_signal_30m
         
-        fast_k_30m = (close_30m - df_30m['low'].rolling(Period).min()) / (df_30m['high'].rolling(Period).max() - df_30m['low'].rolling(Period).min())*100
-        slow_k_30m = fast_k_30m.rolling(window=SlowK_period).mean()
-        slow_d_30m = slow_k_30m.rolling(window=SlowD_period).mean()
+        fast_k_30m = (close_30m - df_30m['low'].rolling(Period2).min()) / (df_30m['high'].rolling(Period2).max() - df_30m['low'].rolling(Period2).min())*100
+        slow_k_30m = fast_k_30m.rolling(window=SlowK_period2).mean()
+        slow_d_30m = slow_k_30m.rolling(window=SlowD_period2).mean()
 
         fast_k_30m_2 = (close_30m - df_30m['low'].rolling(Period2).min()) / (df_30m['high'].rolling(Period2).max() - df_30m['low'].rolling(Period2).min())*100
         slow_k_30m_2 = fast_k_30m_2.rolling(window=SlowK_period2).mean()
