@@ -178,7 +178,7 @@ while True:
                 #print(now,"long")
                 if slow_k_5m[-1] <= 80  :
                     #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2]
-                    if slow_k_5m[-1] > slow_d_5m[-1] and slow_k_5m[-2] < slow_k_5m[-1] and macd_5m[-2] <= macd_signal_5m[-2] and macd_5m[-1] > macd_signal_5m[-1]  :
+                    if slow_k_5m[-2] <= 50 and slow_k_5m[-1] > slow_d_5m[-1] and slow_k_5m[-2] < slow_k_5m[-1] and macd_5m[-2] <= macd_signal_5m[-2] and macd_5m[-1] > macd_signal_5m[-1]  :
                         position['type'] = 'long'
                         if buy_phase == 0 :
                             buy_phase = 1
@@ -198,7 +198,7 @@ while True:
                         time.sleep(1)
                         bot.sendMessage(mc, buy_msg)
 
-                    elif slow_k_5m[-2] <= 30 and macd_5m[-1] > macd_signal_5m[-1] and slow_k_5m[-1] > slow_d_5m[-1] and slow_k_5m[-2] < slow_k_5m[-1]    :
+                    elif slow_k_5m[-2] <= 50 and macd_5m[-1] > macd_signal_5m[-1] and slow_k_5m[-1] > slow_d_5m[-1] and slow_k_5m[-2] < slow_k_5m[-1]    :
                         #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2] 
                         if slow_k_1m[-2] <= 20 and slow_k_1m[-2] < slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1]   :
                             position['type'] = 'long'
@@ -220,7 +220,7 @@ while True:
                             time.sleep(1)
                             bot.sendMessage(mc, buy_msg)
 
-                    elif slow_k_5m[-2] <= 20  :
+                    elif slow_k_5m[-2] <= 50  :
                         #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2]
                         if slow_k_5m[-2] < slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1]   :
                             position['type'] = 'long'
@@ -256,7 +256,7 @@ while True:
                 #print(now,"short")
                 if slow_k_5m[-1] >= 20 :
                     # 
-                    if slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] and macd_5m[-2] >= macd_signal_5m[-2] and macd_5m[-1] < macd_signal_5m[-1]  :
+                    if slow_k_5m[-1] >= 50 and slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] and macd_5m[-2] >= macd_signal_5m[-2] and macd_5m[-1] < macd_signal_5m[-1]  :
                         position['type'] = 'short'
                         if buy_phase == 0 :
                             buy_phase = 1
@@ -276,7 +276,7 @@ while True:
                         time.sleep(1)
                         bot.sendMessage(mc, buy_msg )
 
-                    elif slow_k_5m[-1] >= 70  and macd_5m[-1] < macd_signal_5m[-1] and slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] :
+                    elif slow_k_5m[-1] >= 50  and macd_5m[-1] < macd_signal_5m[-1] and slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] :
                         #  
                         if slow_k_1m[-1] >= 80  and slow_k_1m[-2] > slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] :
                             position['type'] = 'short'
@@ -298,7 +298,7 @@ while True:
                             time.sleep(1)
                             bot.sendMessage(mc, buy_msg )
 
-                    elif slow_k_5m[-1] >= 80   :
+                    elif slow_k_5m[-1] >= 50   :
                         # 
                         if slow_k_5m[-2] > slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] :
                             position['type'] = 'short'
@@ -372,7 +372,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "long 청산(5) : "+str(roe)+"%")
                     buy_phase=0
-                elif buy_condition == 2 and slow_k_1m[-1] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] :
+                elif buy_condition <= 2 and slow_k_1m[-1] >= 80 and slow_k_1m[-2] >= slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] :
                     binance.create_market_sell_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
@@ -428,7 +428,7 @@ while True:
                     position['type'] = None 
                     bot.sendMessage(mc, "short 청산(5) : "+str(roe)+"%")
                     buy_phase=0 
-                elif buy_condition == 2 and slow_k_1m[-2] < 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1]  :
+                elif buy_condition <= 2 and slow_k_1m[-2] < 20 and slow_k_1m[-2] <= slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1]  :
                     binance.create_market_buy_order(symbol=symbol, amount=amount)
                     time.sleep(1)
                     position['type'] = None 
