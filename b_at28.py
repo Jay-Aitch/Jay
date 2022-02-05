@@ -216,7 +216,7 @@ while True:
                                 amt = amount 
                             position['amount'] = amt
                             binance.create_market_buy_order(symbol=symbol, amount=amt)
-                            buy_condition = 1 
+                            buy_condition = 2 
                             time.sleep(1)
                             bot.sendMessage(mc, buy_msg)
 
@@ -294,7 +294,7 @@ while True:
                                 amt = amount 
                             position['amount'] = amt
                             binance.create_market_sell_order(symbol=symbol, amount=amt)
-                            buy_condition = 1 
+                            buy_condition = 2 
                             time.sleep(1)
                             bot.sendMessage(mc, buy_msg )
 
