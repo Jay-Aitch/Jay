@@ -198,8 +198,8 @@ while True:
                         time.sleep(1)
                         bot.sendMessage(mc, buy_msg)
 
-                    elif slow_k_5m[-1] > slow_d_5m[-1] and slow_k_5m[-2] < slow_k_5m[-1]    :
-                        #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2] macd_5m[-1] > macd_signal_5m[-1] and
+                    elif macd_5m[-1] > macd_signal_5m[-1] and slow_k_5m[-1] > slow_d_5m[-1] and slow_k_5m[-2] < slow_k_5m[-1]    :
+                        #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2] 
                         if slow_k_1m[-2] <= 20 and slow_k_1m[-2] < slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1]   :
                             position['type'] = 'long'
                             if buy_phase == 0 :
@@ -276,8 +276,8 @@ while True:
                         time.sleep(1)
                         bot.sendMessage(mc, buy_msg )
 
-                    elif slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] :
-                        # macd_5m[-1] < macd_signal_5m[-1] and 
+                    elif macd_5m[-1] < macd_signal_5m[-1] and slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] :
+                        #  
                         if slow_k_1m[-1] >= 80  and slow_k_1m[-2] > slow_d_1m[-2] and slow_k_1m[-1] < slow_d_1m[-1] :
                             position['type'] = 'short'
                             if buy_phase == 0 :
