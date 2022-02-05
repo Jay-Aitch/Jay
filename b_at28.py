@@ -107,9 +107,9 @@ while True:
         macd_1m = exp1_1m-exp2_1m
         macd_signal_1m = macd_1m.ewm(span=9, adjust=False).mean()
         macd_osc_1m = macd_1m - macd_signal_1m
-        fast_k_1m = (close_1m - df_1m['low'].rolling(30).min()) / (df_1m['high'].rolling(10).max() - df_1m['low'].rolling(10).min())*100
-        slow_k_1m = fast_k_1m.rolling(window=3).mean()
-        slow_d_1m = slow_k_1m.rolling(window=3).mean()
+        fast_k_1m = (close_1m - df_1m['low'].rolling(Period2).min()) / (df_1m['high'].rolling(Period2).max() - df_1m['low'].rolling(Period2).min())*100
+        slow_k_1m = fast_k_1m.rolling(window=SlowK_period2).mean()
+        slow_d_1m = slow_k_1m.rolling(window=SlowD_period2).mean()
 
         btc_ohlcv_30m = binance.fetch_ohlcv(symbol="BTC/USDT", timeframe='30m', since=None, limit=200)
         df_30m = pd.DataFrame(btc_ohlcv_30m, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
@@ -172,7 +172,7 @@ while True:
         # Enter  
         if ((position['type'] is None) or (position['type']=='long' and buy_phase <= 0 and roe < -3)) :
         #if (position['type'] is None) :and slow_k_30m[-2] < slow_k_30m[-1] and macd_5m[-2] < macd_5m[-1] and (macd_30m[-1] > macd_signal_30m[-1] or macd_30m[-2] < macd_30m[-1] and ) and macd_30m[-1] > macd_signal_30m[-1]  
-            #long조건1             slow_k_30m[-2] < slow_k_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]and macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]and slow_k_30m[-2] < slow_d_30m[-2] 
+            #long조건1             slow_k_30m[-2] < slow_k_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]and slow_k_30m[-2] < slow_d_30m[-2] 
             
             if slow_k_30m[-1] <= 100 and slow_k_30m[-1] > slow_d_30m[-1] and macd_30m[-1] > macd_signal_30m[-1] :
                 #print(now,"long")
@@ -220,7 +220,7 @@ while True:
                             time.sleep(1)
                             bot.sendMessage(mc, buy_msg)
 
-                    elif slow_k_5m[-2] <= 50  :
+                    elif slow_k_5m[-2] <= 50 and macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1]  :
                         #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2]
                         if slow_k_5m[-2] < slow_d_5m[-2] and slow_k_5m[-1] > slow_d_5m[-1]   :
                             position['type'] = 'long'
@@ -298,7 +298,7 @@ while True:
                             time.sleep(1)
                             bot.sendMessage(mc, buy_msg )
 
-                    elif slow_k_5m[-1] >= 50   :
+                    elif slow_k_5m[-1] >= 50 and macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1]  :
                         # 
                         if slow_k_5m[-2] > slow_d_5m[-2] and slow_k_5m[-1] < slow_d_5m[-1] :
                             position['type'] = 'short'
