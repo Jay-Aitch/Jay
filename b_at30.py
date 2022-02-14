@@ -85,7 +85,7 @@ while True:
         Period2 = 10
         SlowK_period2 = 3
         SlowD_period2 = 3
-        fast_k_5m = (close_5m - df_5m['low'].rolling(Period).min()) / (df_5m['high'].rolling(Period).max() - df_5m['low'].rolling(Period).min())*100
+        fast_k_5m = (close_5m - df_5m['low'].rolling(20).min()) / (df_5m['high'].rolling(20).max() - df_5m['low'].rolling(20).min())*100
         slow_k_5m = fast_k_5m.rolling(window=4).mean()
         slow_d_5m = slow_k_5m.rolling(window=4).mean()
 
@@ -123,8 +123,8 @@ while True:
         macd_osc_30m = macd_30m - macd_signal_30m
         
         fast_k_30m = (close_30m - df_30m['low'].rolling(Period).min()) / (df_30m['high'].rolling(Period).max() - df_30m['low'].rolling(Period).min())*100
-        slow_k_30m = fast_k_30m.rolling(window=SlowK_period).mean()
-        slow_d_30m = slow_k_30m.rolling(window=SlowD_period).mean()
+        slow_k_30m = fast_k_30m.rolling(window=4).mean()
+        slow_d_30m = slow_k_30m.rolling(window=4).mean()
 
         fast_k_30m_2 = (close_30m - df_30m['low'].rolling(Period2).min()) / (df_30m['high'].rolling(Period2).max() - df_30m['low'].rolling(Period2).min())*100
         slow_k_30m_2 = fast_k_30m_2.rolling(window=SlowK_period2).mean()
@@ -181,7 +181,7 @@ while True:
                 #print(now,"long")
                 if macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1] :
                     #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2] and macd_30m[-1] > macd_signal_30m[-1] 
-                    if slow_k_5m[-3] < 20 and slow_k_5m[-3] <= slow_d_5m[-3] and slow_k_5m[-2] > slow_d_5m[-2] :
+                    if slow_k_5m[-3] < 25 and slow_k_5m[-3] <= slow_d_5m[-3] and slow_k_5m[-2] > slow_d_5m[-2] :
                     #if macd_5m[-1] > macd_signal_5m[-1]     :
                         if slow_k_5m[-1] > slow_d_5m[-1] :
                         #if slow_k_1m[-2] <= 20 and slow_k_1m[-2] < slow_d_1m[-2] and slow_k_1m[-1] > slow_d_1m[-1]   :
@@ -213,7 +213,7 @@ while True:
                 if macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] :
                     # and macd_30m[-1] < macd_signal_30m[-1]  and slow_k_30m[-1] < slow_d_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1] 
                     #if slow_k_5m[-1] >= 50 and slow_k_5m[-1] < slow_d_5m[-1] and slow_k_5m[-2] > slow_k_5m[-1] and macd_5m[-2] >= macd_signal_5m[-2] and macd_5m[-1] < macd_signal_5m[-1]  :
-                    if slow_k_5m[-3] > 80 and slow_k_5m[-3] >= slow_d_5m[-3] and slow_k_5m[-2] < slow_d_5m[-2] :
+                    if slow_k_5m[-3] > 75 and slow_k_5m[-3] >= slow_d_5m[-3] and slow_k_5m[-2] < slow_d_5m[-2] :
                         if slow_k_5m[-1] < slow_d_5m[-1] :
                             position['type'] = 'short'
                             if buy_phase == 0 :
