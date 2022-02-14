@@ -161,11 +161,11 @@ while True:
             roe = round((float(btc_position['unrealizedProfit']) / float(btc_position['positionInitialMargin'])) *100,2)
             buy_condition = 1
             if buy_phase == 1 :
-                SL_target = -6
+                SL_target = -10
             elif buy_phase == 2 :
-                SL_target = -6
+                SL_target = -10
             elif buy_phase == 3 :
-                SL_target = -6
+                SL_target = -10
         else :
             roe = 0
             SL_target = -20
@@ -176,8 +176,8 @@ while True:
         if ((position['type'] is None) or (position['type']=='long' and buy_phase <= 1 and roe < -3)) :
         #if (position['type'] is None) :and slow_k_30m[-2] < slow_k_30m[-1] and macd_5m[-2] < macd_5m[-1] and (macd_30m[-1] > macd_signal_30m[-1] or macd_30m[-2] < macd_30m[-1] and ) and macd_30m[-1] > macd_signal_30m[-1]  
             #long조건1             slow_k_30m[-2] < slow_k_30m[-1] and slow_k_30m[-2] < slow_d_30m[-2] and slow_k_30m[-1] > slow_d_30m[-1] 
-            if slow_k_30m[-1] <= 100   :
-                #and slow_k_30m[-1] > slow_d_30m[-1] and macd_osc_30m[-2] < macd_osc_30m[-1]
+            if slow_k_30m[-1] <= 100 and slow_k_30m[-1] > slow_d_30m[-1]  :
+                # and macd_osc_30m[-2] < macd_osc_30m[-1]
                 #print(now,"long")
                 if macd_5m[-2] < macd_5m[-1] and macd_osc_5m[-2] < macd_osc_5m[-1] :
                     #  slow_k_1m[-2] <= 70 slow_k_1m[-2] <= slow_d_1m[-2] and macd_30m[-1] > macd_signal_30m[-1] 
@@ -207,8 +207,8 @@ while True:
         if ((position['type'] is None) or (position['type']=='short' and buy_phase <= 1 and roe < -3))  :
         #if (position['type'] is None) :    and  and (slow_k_30m[-2] > slow_k_30m[-1] and  (macd_30m[-1] < macd_signal_30m[-1] or macd_30m[-2] > macd_30m[-1])) and macd_30m[-1] < macd_signal_30m[-1]
             #short조건1                    slow_k_30m[-2] > slow_k_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1]and slow_k_30m[-2] > slow_d_30m[-2]
-            if slow_k_30m[-1] >= 0 :
-                #and slow_k_30m[-1] < slow_d_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1]
+            if slow_k_30m[-1] >= 0 and slow_k_30m[-1] < slow_d_30m[-1] :
+                # and macd_osc_30m[-2] > macd_osc_30m[-1]
                 #print(now,"short")  
                 if macd_5m[-2] > macd_5m[-1] and macd_osc_5m[-2] > macd_osc_5m[-1] :
                     # and macd_30m[-1] < macd_signal_30m[-1]  and slow_k_30m[-1] < slow_d_30m[-1] and macd_osc_30m[-2] > macd_osc_30m[-1] 
