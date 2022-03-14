@@ -145,8 +145,8 @@ while True:
         macd_osc_30m = macd_30m - macd_signal_30m
         Period_30m = 10
         fast_k_30m = (close_30m - df_30m['low'].rolling(Period_30m).min()) / (df_30m['high'].rolling(Period_30m).max() - df_30m['low'].rolling(Period_30m).min())*100
-        slow_k_30m = fast_k_30m.rolling(window=3).mean()
-        slow_d_30m = slow_k_30m.rolling(window=3).mean()
+        slow_k_30m = fast_k_30m.rolling(window=4).mean()
+        slow_d_30m = slow_k_30m.rolling(window=4).mean()
         sto_osc_30m = slow_k_30m - slow_d_30m
 
         balance = binance.fetch_balance()
