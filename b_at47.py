@@ -313,7 +313,7 @@ while True:
                             aa = df_5m['open'][-1]
                             buy_status = 1
 
-            if slow_k_30m[-1] < 90 and macd_5m[-1] > macd_signal_5m[-1] and macd_5m[-2] < macd_5m[-1] :
+            if slow_k_30m[-1] < 90 and macd_5m[-1] > macd_signal_5m[-1] and macd_5m[-2] < macd_5m[-1] and slow_d_5m[-2] < slow_d_5m[-1] :
                 if slow_k_5m[-2] < 80 and buy_status == 0  :
                     if slow_k_5m[-1] >= slow_d_5m[-1] and slow_k_5m[-3] <= slow_k_5m[-2] <= slow_k_5m[-1]  :
                         if slow_k_3m[-3] < 80 and slow_k_3m[-3] <= slow_d_3m[-3] and slow_k_3m[-2] > slow_d_3m[-2] and slow_k_3m[-1] > slow_d_3m[-1]  :
@@ -415,7 +415,7 @@ while True:
                             aa = df_5m['open'][-1]
                             buy_status = 1
                         
-            if slow_k_30m[-1] > 10 and macd_5m[-1] < macd_signal_5m[-1] and macd_5m[-2] > macd_5m[-1]   :
+            if slow_k_30m[-1] > 10 and macd_5m[-1] < macd_signal_5m[-1] and macd_5m[-2] > macd_5m[-1] and slow_d_5m[-2] > slow_d_5m[-1]   :
                 if slow_k_5m[-2] > 20 and buy_status == 0  :
                     if slow_k_5m[-1] <= slow_d_5m[-1] and slow_k_5m[-3] >= slow_k_5m[-2] >= slow_k_5m[-1] :
                         if slow_k_3m[-3] > 20 and slow_k_3m[-3] >= slow_d_3m[-3] and slow_k_3m[-2] < slow_d_3m[-2] and slow_k_3m[-1] < slow_d_3m[-1] :
