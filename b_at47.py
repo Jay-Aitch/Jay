@@ -262,7 +262,7 @@ while True:
         # Enter                     
         if ((position['type'] is None) or (position['type']=='long' and buy_phase <= 1 and roe < -5)) and bb == 1 :
             #long조건              and slow_k_30m[-1] >= slow_d_30m[-1] and slow_k_30m[-2] <= slow_k_30m[-1] 
-            if slow_k_30m[-1] < 90 and slow_k_30m[-1] >= slow_d_30m[-1] and macd_30m[-2] <= macd_30m[-1] :
+            if slow_k_30m[-1] < 90 and slow_k_30m[-1] >= slow_d_30m[-1] and macd_30m[-2] <= macd_30m[-1] and macd_5m[-2] < macd_5m[-1] :
                     # and slow_k_1m[-2] <= slow_k_1m[-1] and macd_1m[-2] <= macd_1m[-1] and macd_3m[-3] <= macd_3m[-2] <= macd_3m[-1] and macd_5m[-3] <= macd_5m[-2] <= macd_5m[-1]
                         # and slow_k_3m[-2] <= slow_k_3m[-1] and macd_3m[-2] <= macd_3m[-1] and macd_1m[-3] <= macd_1m[-2] <= macd_1m[-1]and macd_5m[-3] <= macd_5m[-2] <= macd_5m[-1]
                 if slow_k_5m[-2] < 20 and buy_status == 0  :
@@ -364,7 +364,7 @@ while True:
 
         if ((position['type'] is None) or (position['type']=='short' and buy_phase <= 1 and roe < -5)) and bb == 1  :
             #short조건1                   and slow_k_30m[-2] >= slow_k_30m[-1]    and slow_k_30m[-1] <= slow_d_30m[-1] 
-            if slow_k_30m[-1] > 10 and slow_k_30m[-1] <= slow_d_30m[-1] and macd_30m[-2] >= macd_30m[-1]   :
+            if slow_k_30m[-1] > 10 and slow_k_30m[-1] <= slow_d_30m[-1] and macd_30m[-2] >= macd_30m[-1] and macd_5m[-2] > macd_5m[-1]   :
                                         #   and macd_1m[-2] >= macd_1m[-1] and macd_3m[-3] >= macd_3m[-2] >= macd_3m[-1] and macd_5m[-3] >= macd_5m[-2] >= macd_5m[-1]
                     #  and macd_3m[-2] >= macd_3m[-1] and macd_1m[-3] >= macd_1m[-2] >= macd_1m[-1] and macd_5m[-3] >= macd_5m[-2] >= macd_5m[-1]
                 if slow_k_5m[-2] > 80 and buy_status == 0  :
